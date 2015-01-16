@@ -6,7 +6,7 @@ Tested up to: 4.1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Kandy for wordpress
+Kandy Plugin is a full-service cloud platform that enables real-time communications for business applications.
 
 == Description ==
 Kandy Plugin is a full-service cloud platform that enables real-time communications for business applications.
@@ -112,14 +112,6 @@ KANDY makes use of a variety of Internet technology and for the most part you wo
 
         [kandyChat class="myChatStyle" id ="my-chat"][/kandyChat]
 
-Note:
-
-* Select proper text format which enable shortcode filter to show all shortcodes correctly.
-* Check provide menu link to make your content as a menu.
-* Uncheck promoted to front end
-* Uncheck Display author and date information.
-* Close comment settings
-* Shortcode only work with inline format
 ==========================================================================================
 
 KANDY ADMINISTRATION
@@ -197,7 +189,6 @@ window.presencenotification_callack = function() {
 
 <strong>Troubleshooting</strong>
 
-* If you have any questions, comments, problems or suggestions please <a href="http://www.longtailvideo.com/support/forums/addons/working-with-wordpress">post on our forums</a>. We can't fix any issues you're having if we don't know they exist.
 * Please include a description of the problem, a link to your site demonstrating the issue, and the host you're using.
 * Please do not write a one star review when you encounter a problem with this plugin. <a href="http://www.longtailvideo.com/support/forums/addons/working-with-wordpress">Contact us</a> instead and we will try to help you</a>.
 * Keep an eye on this site's <em>Changelog</em> section if you're looking for a specific bugfix of feature enhancement for the plugin.

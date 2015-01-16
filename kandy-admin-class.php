@@ -5,39 +5,9 @@ class KandyAdmin {
         global $wp_version;
        // add_action("init", array($this, 'enqueue_scripts_and_styles'));
         add_action('admin_menu', array($this, 'admin_menu'));
-        register_activation_hook( __FILE__, array($this,'kandy_install' ));
-        add_action( 'plugins_loaded', array($this, 'kandy_install'));
+       // add_action( 'plugins_loaded', array($this, 'kandy_install'));
     }
-    public function kandy_install() {
-        global $wpdb;
-        $kandyDbVersion = "1.4";
 
-        $table_name = $wpdb->prefix . 'kandy_users';
-        $installed_ver = get_option( "kandy_db_version" );
-
-        if ( $installed_ver != $kandyDbVersion ) {
-            $sql = "CREATE TABLE IF NOT EXISTS `".$table_name."` (
-                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                  `user_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `domain_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `api_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `api_secret` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `main_user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-                  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  PRIMARY KEY (`id`)
-                )";
-
-            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-            dbDelta( $sql );
-
-            add_option( 'kandy_db_version', $kandyDbVersion );
-        }
-    }
     public function admin_menu() {
         $admin = add_menu_page(
             "Kandy Configuration",

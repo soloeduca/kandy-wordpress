@@ -63,9 +63,10 @@ class KandyApi{
             . $fieldsString;
 
         try {
-            $response = (new RestClient())->get($url)->getContent();
+            $restClientObject = new RestClient();
+            $response = $restClientObject->get($url)->getContent();
         } catch (Exception $ex) {
-            watchdog_exception('kandy ', $ex);
+
             return array(
                 'success' => false,
             );
@@ -94,7 +95,7 @@ class KandyApi{
     public static function listUsers($type = KANDY_USER_ALL, $remote = false)
     {
         $result = array();
-
+        require_once dirname(__FILE__) . '/RestClient.php';
         // get data from server
         if ($remote) {
             $getTokenResponse = self::getDomainAccessToken();
@@ -112,9 +113,10 @@ class KandyApi{
                 );
 
                 try {
-                    $response = (new RestClient())->get($url, $headers)->getContent();
+                    $restClientObject = new RestClient();
+                    $response = $restClientObject->get($url, $headers)->getContent();
                 } catch (Exception $ex) {
-                    watchdog_exception('kandy ', $ex);
+
                     return array(
                         'success' => false,
                         'message' => $ex->getMessage()
@@ -254,9 +256,10 @@ class KandyApi{
             . $fieldsString;
 
         try {
-            $response = (new RestClient())->get($url)->getContent();
+            $restClientObject = new  RestClient();
+            $response = $restClientObject->get($url)->getContent();
         } catch (Exception $ex) {
-            watchdog_exception('kandy ', $ex);
+
             return array(
                 'success' => false,
                 'message' => $ex->getMessage()
@@ -361,7 +364,7 @@ class KandyApi{
             }
             catch (Exception $ex) {
                 $wpdb->query('ROLLBACK');
-                watchdog_exception('kandy ', $ex);
+
                 $result = array(
                     'success' => false,
                     'message' => "Error Data"
@@ -416,7 +419,7 @@ class KandyApi{
             }
 
         } catch(Exception $ex){
-            watchdog_exception('kandy ', $ex);
+
             return false;
         }
 
@@ -448,7 +451,7 @@ class KandyApi{
                 return false;
             }
         } catch(Exception $ex){
-            watchdog_exception('kandy ', $ex);
+
             return false;
         }
 
