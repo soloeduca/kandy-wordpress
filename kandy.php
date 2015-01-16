@@ -4,6 +4,7 @@
  * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
  * Description: Kandy for wordpress.
  * Version: 1.4
+ * Text Domain: kandy
  * Author: kodeplusdev
  * Author URI: https://github.com/kodeplusdev
  * License: GPL2

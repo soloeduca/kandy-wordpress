@@ -164,3 +164,4 @@ window.presencenotification_callack = function() {
 ### Troubleshooting
 - **Kandy Shortcode not working:** check your kandy api key, domain secret key for your application at **Kandy > Settings**
 - **Jquery conflict**: Set Jquery reload to true at **Kandy > Settings**
+- **Internationalizing**: get the /languages/kandy.pot file and make your /languages/*.mo file to locale your language.

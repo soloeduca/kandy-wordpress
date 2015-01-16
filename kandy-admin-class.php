@@ -5,6 +5,7 @@ class KandyAdmin {
         global $wp_version;
        // add_action("init", array($this, 'enqueue_scripts_and_styles'));
         add_action('admin_menu', array($this, 'admin_menu'));
+        load_plugin_textdomain( 'kandy', false, KANDY_PLUGIN_DIR. "/languages" );
        // add_action( 'plugins_loaded', array($this, 'kandy_install'));
     }
 

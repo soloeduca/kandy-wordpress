@@ -82,7 +82,9 @@ test pusblish
 .kandyAddressBook .kandyDirectorySearch {
     margin-top: 20px
 }
-
+.kandyAddressBook .kandyDirectorySearch input{
+    margin-right: 20px
+}
 .kandyAddressBook .kandyDirSearchTitle {
     text-align: center;
     text-decoration: underline
@@ -91,7 +93,8 @@ test pusblish
 .kandyAddressBook .kandyDirSearchResults {
     background-color: lightgray;
     padding: 5px 10px;
-    border: 1px solid black
+    border: 1px solid black;
+    margin-top: 10px;
 }
 
 .kandyAddressBook .userid {
@@ -129,7 +132,8 @@ test pusblish
 }
 
 .kandyChat .messages {
-    border: solid black 1px
+    border:1px solid black ;
+
 }
 
 .kandyChat .imMessage {
@@ -170,7 +174,6 @@ test pusblish
     width: 32%;
     height: 100%;
     float: left;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
     padding: 0px;
     -webkit-box-shadow: inset 0px 0px 2px #aaa;/* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
