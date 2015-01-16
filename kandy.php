@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: kandy
- * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+ * Plugin URI: https://github.com/kodeplusdev/kandywordpress
  * Description: Kandy for wordpress.
  * Version: 1.4
  * Text Domain: kandy
