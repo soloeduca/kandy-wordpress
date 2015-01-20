@@ -22,9 +22,9 @@ class KandyShortcode {
 
     }
     static function register_my_script() {
-        if(get_option('kandy_jquery_reload', "0")){
+        /*if(get_option('kandy_jquery_reload', "0")){
             wp_register_script('kandy_jquery', KANDY_JQUERY);
-        }
+        }*/
 
         //register script
         $kandyJsUrl = get_option('kandy_js_url');

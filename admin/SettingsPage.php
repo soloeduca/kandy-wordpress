@@ -129,22 +129,6 @@ class KandySettingsPage extends KandyPage
                     </td>
                 </tr>
 
-                <tr valign="top" id="kandy_jquery_reload_row">
-                    <th scope="row" id="kandy_jquery_reload_label">
-                        <label for="kandy_jquery_reload"><?php _e('Jquery Reload', 'kandy'); ?></label>
-                    </th>
-                    <td id="kandy_jquery_reload_field">
-                        <select id="id_kandy_jquery_reload"
-                                name="kandy_settings[kandy_jquery_reload]"
-                                class="">
-                            <option <?php echo (get_option('kandy_jquery_reload','0')) == '0' ? 'selected' : ''; ?> value="0"><?php _e("No", "kandy"); ?></option>
-                            <option <?php echo (get_option('kandy_jquery_reload','0')) == '1' ? 'selected' : ''; ?> value="1"><?php _e("Yes", "kandy") ?></option>
-                        </select>
-                        <p class="description">
-                            <?php _e("Set 'Yes' if you want to load kandy jquery library", "kandy"); ?>
-                        </p>
-                    </td>
-                </tr>
                 </tbody>
             </table>
 
