@@ -84,8 +84,8 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 **Kandy Video Call**: use a video call button and two video(**myVideo** and **theirVideo** id is required).
    ```sh
 [kandyVideoButton class="myButtonStype"]
-[kandyVideo title="Me" id="myVideo" style = "width: 300px; height: 225px;background-color: darkslategray;"]
-[kandyVideo title="Their"  id="theirVideo" style = "width: 300px; height: 225px;background-color: darkslategray;"]
+[kandyVideo title="Me" id="myVideo" style = "width: 300px;height: 225px;"]
+[kandyVideo title="Their" id="theirVideo" style = "width:300px;height: 225px;"]
 ```
 **Kandy Presence**: use a kandystatus and kandy addressbook compobent
 ```sh
@@ -105,8 +105,6 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 - **Domain Name:** Domain name of you kandy account.
 - **Javascript Library Url**: Link to kandy javascript library.
 - **FCS Library Url**: Link to kandy FCS javascript library.
-- **Jquery Reload**: If you need use kandy jquery library, set it yes.
-
 
 **User assignment:**  help you synchronize kandy users from kandy server to your users system. Select your user and click edit button to assign(unassign) kandy user.
 
@@ -163,5 +161,4 @@ window.presencenotification_callack = function() {
 
 ### Troubleshooting
 - **Kandy Shortcode not working:** check your kandy api key, domain secret key for your application at **Kandy > Settings**
-- **Jquery conflict**: Set Jquery reload to true at **Kandy > Settings**
 - **Internationalizing**: get the /languages/kandy.pot file and make your /languages/*.mo file to locale your language.
