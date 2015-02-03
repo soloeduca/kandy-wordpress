@@ -153,9 +153,9 @@ class KandyShortcode {
 
                 //init htmlOptions
                 $htmlOptionsAttributes = '';
-                if (!isset($attrs['style'])) {
+                /*if (!isset($attrs['style'])) {
                     $htmlOptionsAttributes = "style = 'width: 300px; height: 225px;background-color: darkslategray;'";
-                }
+                }*/
 
                 foreach ($attrs as $key => $value) {
                     if ($key != "id" && $key != "class" && $key != "title") {
@@ -231,7 +231,7 @@ class KandyShortcode {
                 }
 
             } else {
-                $output = '<p>' . t('Can not setup kandy video button...') . '<p>';
+                $output = '<p>' . __('Can not setup kandy video button...') . '<p>';
             }
             return $output;
         }
@@ -338,7 +338,7 @@ class KandyShortcode {
                     $output .= $result['output'];
                 }
             } else {
-                $output = '<p>' . t('Can not setup kandy voice button...') . '<p>';
+                $output = '<p>' . __('Can not setup kandy voice button...') . '<p>';
             }
             return $output;
         }
@@ -398,7 +398,7 @@ class KandyShortcode {
                     $output .= $result['output'];
                 }
             } else {
-                $output = '<p>' . t('Can not setup kandy status...') . '<p>';
+                $output = '<p>' . __('Can not setup kandy status...') . '<p>';
             }
             return $output;
         }
@@ -480,7 +480,7 @@ class KandyShortcode {
                     $output .= $result['output'];
                 }
             } else {
-                $output = '<p>' . t('Can not setup kandy address book...') . '<p>';
+                $output = '<p>' . __('Can not setup kandy address book...') . '<p>';
             }
             return $output;
         }
@@ -527,7 +527,7 @@ class KandyShortcode {
                 }
                 // get current kandy user
                 $current_user = wp_get_current_user();
-                $assignUser = KandyApi::getAssignKandyUser($current_user->ID);
+                $assignUser = KandyApi::getAssignUser($current_user->ID);
                 if($assignUser) {
                     $output = '<div class="' . $class .' cd-tabs" id="'. $id .'" '. $htmlOptionsAttributes .' >'.
                         '<input type="hidden" class="kandy_current_username" value="'. $assignUser->user_id .'"/>'.
@@ -553,7 +553,7 @@ class KandyShortcode {
                 }
 
             } else {
-                $output = '<p>' . t('Can not setup kandy video...') . '<p>';
+                $output = '<p>' . __('Can not setup kandy video...') . '<p>';
             }
             return $output;
         }
@@ -567,7 +567,7 @@ class KandyShortcode {
     static function kandySetup(){
 
         $current_user = wp_get_current_user();
-        $assignUser = KandyApi::getAssignKandyUser($current_user->ID);
+        $assignUser = KandyApi::getAssignUser($current_user->ID);
 
         if($assignUser){
             $userName = $assignUser->user_id;

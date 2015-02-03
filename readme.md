@@ -87,6 +87,10 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 [kandyVideo title="Me" id="myVideo" style = "width: 300px;height: 225px;"]
 [kandyVideo title="Their" id="theirVideo" style = "width:300px;height: 225px;"]
 ```
+
+*Note*: 
+Two **kandyVideo** object should be inline because some editor will insert a break line automatically.
+
 **Kandy Presence**: use a kandystatus and kandy addressbook compobent
 ```sh
 [kandyStatus class="myStatusStype" id="myStatus"]
@@ -157,6 +161,132 @@ window.localvideoinitialized_callback = function(videoTag){
 window.presencenotification_callack = function() {
     //do something with status notification
 }
+```
+
+### Kandy API
+You can use kandy plugin anywhere in your code by following code:
+
+**Load Kandy Plugin**
+```sh
+require_once(KANDY_PLUGIN_DIR . "/api/kandy-api-class.php");
+```
+After load kandy plugin succucessfully you can use all support api:
+
+**1. Get kandy user data for assignment table**
+```sh
+KandyApi::getUserData();
+```
+Return:  kandy user object **array**
+
+**2. Get kandy domain access token**
+```sh
+KandyApi::getDomainAccessToken();
+```
+Return: **array**
+
+```sh
+$result = array("success" => true,
+                "data" => "data",
+                "message" => '')
+OR
+$result = array("success" => false,
+                "data" => "data",
+                "message" => "message")
+```
+
+**3. Get the kandy domain**
+```sh
+KandyApi::getDomain();
+```
+Get kandy domain from kandy settings or remote server
+
+Return: **array **
+
+```sh
+$result = array("success" => true,
+                "data" => "data",
+                "message" => '');
+OR
+$result = array("success" => false,
+                "data" => "data",
+                "message" => "message");
+```
+
+**4. List Kandy User from database/remote**
+```sh
+KandyApi::listUsers($type = KANDY_USER_ALL, $remote = false);
+```
+Parameters:
+```sh
+$type(int) :
+    KANDY_USER_ALL: all kandy users from database/remote
+    KANDY_USER_ASSIGNED: all assigned kandy users from database/remote
+    KANDY_USER_UNASSIGNED: all unassigned kandy users from database/remote
+$remote(boolean) :
+    If $remote = true, get kandy users from remote server(kandy server) instead of from database(local). Default is false.
+```
+Return: Kandy user object **array**
+
+**5. Get assigned kandy user by current user id(main_user_id)**
+```sh
+KandyApi::getAssignUser($mainUserId);
+```
+Parameters:
+```sh
+$mainUserId(int): normal user id(1, 2, 3....)
+```
+Return kandy user object or null
+
+**6 Get kandy user by kandy user id(kandyUserId)**
+```sh
+KandyApi::getUserByUserId($kandyUserId);
+```
+Parameters:
+```sh
+$kandyUserId(int): kandy user id without domain(user1, user2....)
+```
+Return kandy user object or null
+
+**7. Assign a normal user to kandy user**
+```sh
+KandyApi::assignUser($kandyUserId, $mainUserId);
+```
+Parameters:
+```sh
+$kandyUserId(string) : kandy user id without domain(user1, user2....)
+$mainuserId(int): normal user id(1, 2, 3....)
+```
+Return: true/false
+
+**8. Unassign a kandy user**
+```sh
+KandyApi::unassignUser($mainUserId);
+```
+Parameters:
+```sh
+$mainuserId(int): normal user id(1, 2, 3....)
+```
+Return: true/false
+
+**9. Kandy User synchronization**
+
+Synchronize kandy user from remote server to local
+```sh
+KandyApi::syncUsers();
+```
+
+Return: array
+```sh
+$result = array(
+                'success' => true,
+                'message' => "Sync successfully"
+            );
+OR
+$result = array(
+                'success' => false,
+                'message' => "Error Data"
+            );
+
 ```
 
 ### Troubleshooting

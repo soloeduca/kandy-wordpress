@@ -63,7 +63,7 @@ class AssignTableList extends WP_List_Table
 
     function get_data($limit = 10, $offset = 0)
     {
-        $result = KandyApi::getKandyUserData($limit, $offset);
+        $result = KandyApi::getUserData($limit, $offset);
 
         return $result;
     }

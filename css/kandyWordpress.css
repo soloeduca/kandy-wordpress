@@ -8,6 +8,9 @@ test pusblish
 
 .kandyVideo .video {
     display: block;
+    width: 300px;
+    height: 225px;
+    background-color: darkslategray;
 }
 
 .kandyVideo .title {
@@ -352,6 +355,6 @@ test pusblish
 
 .kandyChat .chat-with-message {
     float: left;
-    padding-left: 1.4em;
+    padding-left: 10px;
     display: none;
 }

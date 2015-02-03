@@ -10,7 +10,7 @@ class KandyApi{
      * @return array
      */
 
-    public static function getKandyUserData($limit = 10, $offset = 0)
+    public static function getUserData($limit = 10, $offset = 0)
     {
 
         // Change the number of rows with the limit() call.
@@ -25,7 +25,7 @@ class KandyApi{
                 )
             );
 
-            $kandyUser = self::getAssignKandyUser($row->ID);
+            $kandyUser = self::getAssignUser($row->ID);
 
             $tableCell = array(
                 'ID'  => $row->ID,
@@ -172,7 +172,7 @@ class KandyApi{
      * @param $mainUserId
      * @return mixed
      */
-    public static function getAssignKandyUser($mainUserId)
+    public static function getAssignUser($mainUserId)
     {
         global $wpdb;
         $result = null;
@@ -197,10 +197,10 @@ class KandyApi{
 
     /**
      * get kandy user by user_id
-     * @param $userId
+     * @param $kandyUserId
      * @return mixed
      */
-    public static function getKandyUserByUserId($userId){
+    public static function getUserByUserId($kandyUserId){
         global $wpdb;
         $result = null;
         $getDomainNameResponse = self::getDomain();
@@ -211,7 +211,7 @@ class KandyApi{
             $result = $wpdb->get_results(
                 "SELECT *
                              FROM {$wpdb->prefix}kandy_users
-                             WHERE user_id = '". $userId ."'
+                             WHERE user_id = '". $kandyUserId ."'
                              AND domain_name = '". $domainName ."'");
 
         }
@@ -323,7 +323,7 @@ class KandyApi{
                         'api_secret' => $kandyUser->user_api_secret,
                         'updated_at' => date("Y-m-d H:i:s"),
                     );
-                    $kandyUserModel = self::getKandyUserByUserId($kandyUser->user_id);
+                    $kandyUserModel = self::getUserByUserId($kandyUser->user_id);
 
                     if(!$kandyUserModel){
                         // insert
@@ -382,11 +382,11 @@ class KandyApi{
 
     /**
      * Assign Kandy User
-     * @param $userId
+     * @param $kandyUserId
      * @param $mainUserId
      * @return bool
      */
-    public static function assignKandyUser($userId, $mainUserId){
+    public static function assignUser($kandyUserId, $mainUserId){
         global $wpdb;
         try{
             $getDomainNameResponse = self::getDomain();
@@ -407,7 +407,7 @@ class KandyApi{
                     $wpdb->prefix . 'kandy_users',
                     array('main_user_id' => $mainUserId),
                     array(
-                        'user_id' => $userId,
+                        'user_id' => $kandyUserId,
                         'domain_name'  => $domainName
                     ),
                     array('%d'),
@@ -430,7 +430,7 @@ class KandyApi{
      * @param $mainUserId
      * @return bool
      */
-    public static function unassignKandyUser($mainUserId){
+    public static function unassignUser($mainUserId){
         global $wpdb;
         try{
             $getDomainNameResponse = self::getDomain();

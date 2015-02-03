@@ -38,9 +38,9 @@ class KandyAssignmentEditPage extends KandyPage
                     $kandy_user_id = $_POST['kandy_user_id'];
 
                     if($kandy_user_id){
-                        $result = KandyApi::assignKandyUser($kandy_user_id, $main_user_id);
+                        $result = KandyApi::assignUser($kandy_user_id, $main_user_id);
                     } else{
-                        $result = KandyApi::unassignKandyUser($kandy_user_id, $main_user_id);
+                        $result = KandyApi::unassignUser($kandy_user_id, $main_user_id);
                     }
                     if($result){
                         KandyApi::redirect(
@@ -136,7 +136,7 @@ class KandyAssignmentEditPage extends KandyPage
      */
     protected  function getOptionData($userId){
         $result = "<option value=''>None</option>";
-        $currentKandyUser = KandyApi::getAssignKandyUser($userId);
+        $currentKandyUser = KandyApi::getAssignUser($userId);
         if($currentKandyUser){
             $result .= "<option selected value ='" . $currentKandyUser->user_id."'>". $currentKandyUser->user_id . "</option>";
         }

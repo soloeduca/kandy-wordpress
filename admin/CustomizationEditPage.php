@@ -113,7 +113,7 @@ class KandyCustomizationEditPage extends KandyPage
      */
     protected  function getOptionData($userId){
         $result = "<option value=''>None</option>";
-        $currentKandyUser = KandyApi::getAssignKandyUser($userId);
+        $currentKandyUser = KandyApi::getAssignUser($userId);
         if($currentKandyUser){
             $result .= "<option selected value ='" . $currentKandyUser->user_id."'>". $currentKandyUser->user_id . "</option>";
         }
