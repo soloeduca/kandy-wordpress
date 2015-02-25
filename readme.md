@@ -6,10 +6,10 @@ Home page: http://www.kandy.io/
 Kandy Wordpress Plugin help you use kandy in your website easily by following steps: 
 
   - Install Kandy plugin and active it
-  - Goto Kandy > Settings to configure all required options.
-  - Go Kandy > User Assignment to assign kandy users to your users. If you need refesh kandy users list please click sync.
-  - Go Kandy > Customization to edit some script and style for your kandy components.
-  - Go Pages > Add New to create a new page with kandy components by kandy shortcode.
+  - Go **Kandy > Settings** to configure all required options.
+  - Go **Kandy > User Assignment** to assign kandy users to your users. If you need refesh kandy users list please click sync.
+  - Go **Kandy > Customization** to edit some script and style for your kandy components.
+  - Go **Pages > Add New** to create a new page with kandy components by kandy shortcode.
 
 ####Kandy components and shortcode syntax:
 
@@ -97,12 +97,12 @@ Two **kandyVideo** object should be inline because some editor will insert a bre
 [kandyAddressBook class="myAddressBookStyle" id="myContact"]
 ```
 
-**Kandy Chat: **
+**Kandy Chat**:
 ```sh
 [kandyChat class="myChatStyle" id ="my-chat"]
 ```
 ####Kandy Administration:
-**Settings: ** 
+**Settings**:
 
 - **API Key:** Kandy API key which found in your kandy account.
 - **Domain Secret Key:** Domain Kandy API key which found in your kandy account.
