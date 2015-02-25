@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: kandy
- * Plugin URI: https://github.com/kodeplusdev/kandywordpress
+ * Plugin URI: https://github.com/kodeplusdev/kandy-wordpress
  * Description: Kandy for wordpress.
  * Version: 1.4
  * Text Domain: kandy
- * Author: kodeplusdev
+ * Author: KodePlus
  * Author URI: https://github.com/kodeplusdev
  * License: GPL2
  */

@@ -26,7 +26,6 @@
     display: block;
 }
 .kandyButton .kandyButtonComponent input {
-
     float: left;
     margin-right: 5px;
 }
@@ -36,7 +35,6 @@
 }
 
 .kandyButton .kandyButtonComponent input[type='button'] {
-
     cursor: pointer;
 }
 
@@ -182,8 +180,8 @@
     text-indent: 16px;
     display: block;
     line-height: 1em;
-
 }
+
 .kandyChat .cd-tabs-navigation li.kandy-chat-status-available a{
     background: url("../img/available.png") left center no-repeat;
 }
@@ -191,6 +189,7 @@
 .kandyChat .cd-tabs-navigation li.kandy-chat-status-offline a{
     background: url("../img/offline.png") left center no-repeat;
 }
+
 .kandyChat .cd-tabs-navigation li.kandy-chat-status-unavailable a,
 .kandyChat .cd-tabs-navigation li.kandy-chat-status-away a,
 .kandyChat .cd-tabs-navigation li.kandy-chat-status-busy a,
@@ -201,7 +200,6 @@
 }
 
 /* CSS for tab */
-
 .kandyChat.cd-tabs {
     position: relative;
     max-width: 960px;
@@ -320,7 +318,6 @@
     width: 64%;
     float: left;
     margin: 0px !important;
-
     padding: 0px !important;
 }
 

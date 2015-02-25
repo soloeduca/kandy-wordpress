@@ -28,6 +28,7 @@ window.call_incoming_callback = function (call, isAnonymous) {
 window.on_call_callback = function (call) {
     //do something here
 };
+
 /**
  * Some one answer your call
  * @param call
@@ -44,7 +45,6 @@ window.call_ended_callback = function () {
     //do something here
 };
 
-
 /**
  * Callback when click AnswerVideo Button
  * @param stage
@@ -52,7 +52,6 @@ window.call_ended_callback = function () {
 window.answer_video_call_callback = function (stage) {
     //do something here
 };
-
 
 /**
  * Callback when click AnswerVideo Button
@@ -85,6 +84,7 @@ window.end_call_callback = function (stage) {
 window.remote_video_initialized_callback = function(videoTag){
     //do something here
 };
+
 /**
  * Your local video callback
  * @param videoTag
