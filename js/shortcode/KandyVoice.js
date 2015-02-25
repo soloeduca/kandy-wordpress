@@ -1,73 +1,73 @@
 /**
  * You login success
  */
-window.loginsuccess_callback = function () {
+window.login_success_callback = function () {
     //do something here
-}
+};
 
 /**
  * you login fail
  */
-window.loginfailed_callback = function () {
+window.login_failed_callback = function () {
 //do something here
-}
+};
 
 /**
  * Someone are calling you
  * @param call
  * @param isAnonymous
  */
-window.callincoming_callback = function (call, isAnonymous) {
+window.calling_coming_callback = function (call, isAnonymous) {
     //do something here
-}
+};
 
 /**
  * You are on call
  * @param call
  */
-window.oncall_callback = function (call) {
+window.on_call_callback = function (call) {
     //do something here
-}
+};
 /**
  * Some one answer your call
  * @param call
  * @param isAnonymous
  */
-window.callanswered_callback = function (call, isAnonymous) {
+window.call_answered_callback = function (call, isAnonymous) {
     //do something here
-}
+};
 
 /**
  * end call callback
  */
-window.callended_callback = function () {
+window.call_ended_callback = function () {
     //do something here
-}
+};
 /*
 *   Callback when click AnswerVideo Button
  */
-window.answerVideoCall_callback = function (stage) {
+window.answer_video_call_callback = function (stage) {
     //do something here
-}
+};
 
 /*
  *   Callback when click AnswerVideo Button
  */
-window.answerVoiceCall_callback = function (stage) {
+window.answer_voice_call_callback = function (stage) {
     //do something here
-}
+};
 
 /*
  *   Callback when click Call Button
  */
-window.makeCall_callback = function (stage) {
+window.make_call_callback = function (stage) {
     //do something here
-}
+};
 
 /*
  *   Callback when click End call Button
  */
-window.endCall_callback = function (stage) {
+window.end_call_callback = function (stage) {
     //do something here
-}
+};
 

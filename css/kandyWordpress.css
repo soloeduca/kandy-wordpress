@@ -1,6 +1,3 @@
-/*
-test pusblish
-*/
 .kandyVideo {
     margin-right: 10px;
     float: left;
@@ -17,10 +14,7 @@ test pusblish
     margin: 5px 0px;
 }
 
-/*
-
-=====KANDY VIDEO CALL STYLE=====
-*/
+/* Kandy Button*/
 .kandyButton {
     overflow: auto;
 }
@@ -74,23 +68,24 @@ test pusblish
     background-color: lightslategray;
     color: white;
     padding: 5px 10px;
-    border: 1px solid black
+    border: 1px solid black;
 }
 
-.kandyAddressBook .kandyAddressContactList .myContacts Title {
+.kandyAddressBook .kandyAddressContactList .myContactsTitle {
     text-align: center;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 .kandyAddressBook .kandyDirectorySearch {
-    margin-top: 20px
+    margin-top: 20px;
 }
 .kandyAddressBook .kandyDirectorySearch input{
-    margin-right: 20px
+    margin:10px 20px 10px 0px;
+
 }
 .kandyAddressBook .kandyDirSearchTitle {
     text-align: center;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 .kandyAddressBook .kandyDirSearchResults {
@@ -100,14 +95,14 @@ test pusblish
     margin-top: 10px;
 }
 
-.kandyAddressBook .userid {
-    width: 190px;
-    display: inline-block
+.kandyAddressBook .userId {
+    display: inline-block;
+    width: 240px;
 }
 
 .kandyAddressBook .presence {
     width: 130px;
-    display: inline-block
+    display: inline-block;
 }
 
 .kandyAddressBook .kandyContactItem {
@@ -183,7 +178,7 @@ test pusblish
     text-indent: 16px;
 }
 .kandyChat .cd-tabs-navigation li i.status{
-    font-size: 0.75em;
+    font-size: 0.7em;
     text-indent: 16px;
     display: block;
     line-height: 1em;
@@ -246,7 +241,7 @@ test pusblish
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #000;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 .kandyChat .no-touch .cd-tabs-navigation a:hover {
@@ -343,7 +338,6 @@ test pusblish
 
 .kandyChat .cd-tabs-content li p {
     font-size: 14px;
-    font-size: 0.875rem;
     line-height: 1.6;
     color: #8493bf;
     margin-bottom: 2em;

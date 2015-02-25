@@ -72,5 +72,4 @@ class KandyPage
         <div class="clear"></div>
     <?php
     }
-
 } 
