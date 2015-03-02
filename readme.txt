@@ -7,10 +7,14 @@ Stable tag: 1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Kandy Plugin is a full-service cloud platform that enables real-time communications for business applications.
+This WordPress plugin encapsulates all of Kandy’s JS SDK and Restful APIs. Kandy is a product by GENBAND (www.genband.com) that utilizes WebRTC to enable peer to peer audio and video calls and chat. SMS and PSTN calling support will be added to this package in the near future.
+With this plugin, you can enable video and audio calling between two users that are logged into your WordPress website.
+Think of pages where you anticipate users collaborating with each other, possibly to discuss content on those pages. Your users could start a video call with other online users and enhance the collaboration experience.
 
 == Description ==
-Kandy Plugin is a full-service cloud platform that enables real-time communications for business applications.
+This WordPress plugin encapsulates all of Kandy’s JS SDK and Restful APIs. Kandy is a product by GENBAND (www.genband.com) that utilizes WebRTC to enable peer to peer audio and video calls and chat. SMS and PSTN calling support will be added to this package in the near future.
+With this plugin, you can enable video and audio calling between two users that are logged into your WordPress website.
+Think of pages where you anticipate users collaborating with each other, possibly to discuss content on those pages. Your users could start a video call with other online users and enhance the collaboration experience.
 
 Home page: http://www.kandy.io/
 
