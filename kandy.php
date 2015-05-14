@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: kandy
- * Plugin URI: https://github.com/kodeplusdev/kandy-wordpress
+ * Plugin URI: https://github.com/Kandy-IO/kandy-wordpress
  * Description: Kandy for wordpress.
- * Version: 1.4
+ * Version: 2.2.1
  * Text Domain: kandy
- * Author: KodePlus
- * Author URI: https://github.com/kodeplusdev
+ * Author: Kandy-IO
+ * Author URI: https://github.com/Kandy-IO
  * License: GPL2
  */
 $pluginURL = is_ssl() ? str_replace("http://", "https://", WP_PLUGIN_URL) : WP_PLUGIN_URL;
