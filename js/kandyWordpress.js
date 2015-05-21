@@ -37,12 +37,7 @@ setup = function () {
 
         remoteVideoContainer: jQuery('#theirVideo')[0],
         localVideoContainer: jQuery('#myVideo')[0],
-        pstnOutNumber: '71',
-        fcsConfig: {
-            restPlatform: 'kandy', // 'spidr' or 'kandy'
-            kandyApiUrl: 'https://api.kandy.io/v1.1/users/gateway',
-            useInternalJquery: true
-        },
+
         // Respond to Kandy events.
         listeners: {
 
@@ -54,13 +49,9 @@ setup = function () {
             callanswered: kandyCallAnsweredCallback,
             callended: kandyCallEndedCallback,
             callendedfailed: kandyOnCallEndedFailed,
-
             callinitiated: kandyOnCallInitiate,
             callinitiatefailed: kandyOnCallInitiateFail,
-
-
             callrejected: kandyOnCallRejected,
-
             presencenotification: kandyPresenceNotificationCallback
         }
     });
@@ -140,7 +131,9 @@ function kandyOnCallInitiate(call) {
     $audioRingOut[0].play();
 }
 
-// Event handler for callinitiatefail event
+/**
+ * Event handler for callinitiatefail event.
+ */
 function kandyOnCallInitiateFail() {
     $audioRingOut[0].pause();
 
@@ -149,7 +142,6 @@ function kandyOnCallInitiateFail() {
 /**
  * Event handler for callrejected event
  */
-
 function kandyOnCallRejected() {
     callId = null;
     $audioRingIn[0].pause();
@@ -303,6 +295,21 @@ kandy_reject_video_call = function (target) {
         reject_video_call_callback("READY_FOR_CALLING");
     }
 }
+
+/**
+ * Event when click call button PSTN.
+ *
+ * @param target
+ */
+kandy_make_pstn_call = function (target) {
+
+    var number = jQuery('.kandyButton .kandyVideoButtonCallOut #callOutUserId').val();
+    var userName = jQuery('.kandyButton .kandyVideoButtonCallOut #callOutUserId').val();
+
+    KandyAPI.Phone.makePSTNCall(number, userName);
+
+    changeAnswerButtonState("CALLING");
+};
 
 /**
  * Event when click call button.
