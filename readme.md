@@ -13,7 +13,7 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 
 ####Kandy components and shortcode syntax:
 
-**Kandy Video Button**: make a video call button component(video call)
+**Kandy Video Button**: make a video call button component(video call) and it is integrated full screen, screen sharing feature.
 ```sh
 [kandyVideoButton
         class = "myButtonStyle"
@@ -49,7 +49,8 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
         onCallLabel = "You are connected!"
         onCallButtonText = "End Call"
         type = "PSTN"
-        callTo = "0123456789"]
+        callto = "0123456789"
+        anonymous = "true"]
 ```
   
 **Kandy Status**: make a kandy user status component (available, unavailable, awway, busy....). Kandy Status usually use with kandy address book component.
@@ -70,7 +71,7 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
         searchResultLabel = "Directory Search Results"]
   ```
   
-**Kandy Chat**: make a kandy chat component which help you send instant message to your friend in contact.
+**Kandy Chat**: make a kandy chat component which help you send instant message to your friend in contact and it is integrated file sharing feature.
 ```sh
 [kandyChat
         class = "myChatStyle"
@@ -95,6 +96,10 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 ```sh
 [kandyVoiceButton class= "myButtonStyle" id ="my-voice-button"]
 ```
+or
+```sh
+[kandyVoiceButton class= "myButtonStyle" id ="my-voice-button" callto="user_kandy@domain.com" anonymous="true"]
+```
 
 **Kandy Voice PSTN Call**
 ```sh
@@ -103,7 +108,7 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 
 **Kandy Voice PSTN Call With Number**
 ```sh
-[kandyVoiceButton class= "myButtonStyle" type = "PSTN" callTo = "0123456xxxx" id ="my-voice-button"]
+[kandyVoiceButton class= "myButtonStyle" type = "PSTN" callto = "0123456xxxx" id ="my-voice-button"]
 ```
 
 **Kandy Video Call**: use a video call button and two video(**myVideo** and **theirVideo** id is required).
@@ -115,6 +120,13 @@ Kandy Wordpress Plugin help you use kandy in your website easily by following st
 
 *Note*: 
 Two **kandyVideo** object should be inline because some editor will insert a break line automatically.
+
+**Screen Sharing** feature:
+ - Screen sharing can only be used over a secure connection (https).
+ - Before testing it, please install this extension on chrome browser: 
+   https://chrome.google.com/webstore/detail/kandyio-screen-sharing/daohbhpgnnlgkipndobecbmahalalhcp
+ - This extension only works on localhost domain.
+ - Finally, you test it on video call feature.
 
 **Kandy Presence**: use a kandyStatus and kandy addressBook compobent
 ```sh

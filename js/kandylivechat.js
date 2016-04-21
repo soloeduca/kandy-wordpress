@@ -81,8 +81,8 @@ var getKandyUsers = function(){
     jQuery.ajax({
         url: ajax_object.ajax_url + '?action=kandy_get_free_user',
         type: 'GET',
-        async: false,
         dataType: 'json',
+        async: false,
         success: function(res){
             if(checkAvailable){
                 LiveChatUI.changeState('RECONNECTING');

@@ -8,6 +8,27 @@
     width: 300px;
     height: 225px;
     background-color: darkslategray;
+    position: relative;
+}
+
+.icon-full-screen {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: url(../img/full_screen.png) no-repeat center center;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-full-screen:hover {
+    cursor: pointer;
+}
+
+/* deeper elements */
+:-webkit-full-screen video {
+    width: 100%;
+    height: 100%;
 }
 
 .kandyVideo .title {
@@ -149,7 +170,7 @@
 }
 
 .kandyChat .imMessageToSend {
-    width: 96%;
+    width: 100%;
     padding: 7px 2px;
 }
 
@@ -424,11 +445,12 @@
 
 .kandyChat .input-message {
     float: left;
-    width: 87%;
+    width: 84%;
+    position: relative;
 }
 
 .kandyChat .button-send {
-    width: 12%;
+    width: 59px;
     float: right;
 }
 
@@ -631,13 +653,46 @@ iframe {
     display: none !important;
 }
 
-
-
-
-
-
-
 /* Pace */
 .pace .pace-progress {
     z-index: 999999;
+}
+input[type="submit"][disabled]:hover {
+    padding: 10px 2px!important;
+}
+
+.send-file {
+    position: absolute;
+    right: 4px;
+    top: 5px;
+}
+
+.send-file > input {
+    display: none;
+}
+
+.send-file span.icon-file {
+    background: #c4ccbe url(../img/icon-file-black.png) no-repeat center center;
+    display: none;
+    width: 25px;
+    height: 25px;
+    background-size: 15px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.send-file span.icon-file:hover {
+    background-color: #8b9ba5;
+}
+.imMessage > img {
+    width: 75px;
+    border-radius: 5px;
+}
+.imMessage .icon-download {
+    cursor: pointer;
+    color: #007acc;
+    margin-top: 15px;
+    margin-left: 5px;
+    float: right;
+    font-size: 13px;
 }

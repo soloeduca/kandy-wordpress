@@ -11,6 +11,11 @@ var $audioRingIn = jQuery('<audio>', { loop: 'loop', id: 'ring-in' });
 var $audioRingOut = jQuery('<audio>', { loop: 'loop', id: 'ring-out' });
 var kandyPresence = {};
 var last_seen_interval;
+// Keep track of the callId.
+var callId;
+// Keep track of screen sharing status.
+var isSharing = false;
+
 // Load audio source to DOM to indicate call events
 var audioSource = {
     ringIn: [
@@ -49,7 +54,16 @@ setup = function () {
             callendedfailed: kandyOnCallEndedFailed,
             callinitiated: kandyOnCallInitiate,
             callinitiatefailed: kandyOnCallInitiateFail,
-            callrejected: kandyOnCallRejected
+            callrejected: kandyOnCallRejected,
+
+            // Media Event
+            media: onMediaError,
+            // Screensharing Event
+            callscreenstopped: onStopSuccess
+        },
+        // Reference the default Chrome extension.
+        chromeExtensionId: {
+            chromeExtensionId: 'daohbhpgnnlgkipndobecbmahalalhcp'
         }
     });
 
@@ -74,6 +88,7 @@ setup = function () {
  */
 kandyLoginSuccessCallback = function () {
     console.log('login success');
+    jQuery('#callBtn').removeAttr('disabled');
     // Have kandy Address Book widget.
     if (jQuery(".kandyAddressBook").length) {
         kandyLoadContactsAddressBook();
@@ -140,8 +155,11 @@ kandyPresenceNotificationCallback = function (userId, state, description, activi
  * Event handler for callinitiate
  * @param call
  */
-function kandyOnCallInitiate(call) {
-    jQuery("#" + activeContainerId).attr("data-call-id", call.getId());
+function kandyOnCallInitiate(call, calleeName) {
+    console.log('Making call to ' + calleeName);
+    // Store the callId.
+    callId = call.getId();
+    jQuery("#" + activeContainerId).attr("data-call-id", callId);
     $audioRingIn[0].pause();
     $audioRingOut[0].play();
 }
@@ -150,6 +168,7 @@ function kandyOnCallInitiate(call) {
  * Event handler for callinitiatefail event.
  */
 function kandyOnCallInitiateFail() {
+    callId = null;
     $audioRingOut[0].pause();
 
 }
@@ -158,10 +177,65 @@ function kandyOnCallInitiateFail() {
  * Event handler for callrejected event
  */
 function kandyOnCallRejected() {
+    callId = null;
     $audioRingIn[0].pause();
     UIState.callrejected();
 }
 
+/*-------------Screen Sharing--------------*/
+
+// Called when the media event is triggered.
+function onMediaError(error) {
+    switch(error.type)
+    {
+        case kandy.call.MediaErrors.NOT_FOUND:
+            console.log("No WebRTC support was found.");
+            break;
+        case kandy.call.MediaErrors.NO_SCREENSHARING_WARNING:
+            console.log("WebRTC supported, but no screensharing support was found.");
+            break;
+        default:
+            console.log('Other error or warning encountered.');
+            break;
+    }
+}
+
+// Executed when the user clicks on the 'Toggle Screensharing' button.
+toggle_screen_sharing = function () {
+    // Check if we should start or stop sharing.
+    if(callId && isSharing) {
+        // Stop screensharing.
+        kandy.call.stopScreenSharing(callId, onStopSuccess, onStopFailure);
+    } else {
+        // Start screensharing.
+        kandy.call.startScreenSharing(callId, onStartSuccess, onStartFailure);
+    }
+};
+
+// What to do on a successful screenshare start.
+function onStartSuccess() {
+    console.log('Screensharing started.');
+    jQuery('.btnScreenSharing').val('Stop Screen Sharing');
+    isSharing = true;
+}
+
+// What to do on a failed screenshare start.
+function onStartFailure() {
+    console.log('Failed to start screensharing.');
+}
+
+// What to do on a successful screenshare stop.
+function onStopSuccess() {
+    console.log('Screensharing stopped.');
+    jQuery('.btnScreenSharing').val('Screen Sharing');
+    isSharing = false;
+}
+
+// What to do on a failed screenshare stop.
+function onStopFailure() {
+    console.log('Failed to stop screensharing.');
+}
+/*------------------End screen sharing------------------*/
 /**
  * OnCall Callback.
  *
@@ -191,7 +265,9 @@ kandyIncomingCallCallback = function (call, isAnonymous) {
     $audioRingIn[0].play();
 
     var target = jQuery('.kandyVideoButtonCallOut:visible').get(0).closest('.kandyButton');
-    jQuery(target).attr("data-call-id", call.getId());
+    // Store the callId.
+    callId = call.getId();
+    jQuery(target).attr("data-call-id", callId);
     changeAnswerButtonState('BEING_CALLED',target);
 };
 
@@ -227,6 +303,9 @@ kandyCallEndedCallback = function (call) {
 
     var target = jQuery('.kandyButton[data-call-id="'+ call.getId() +'"]');
     changeAnswerButtonState("READY_FOR_CALLING", target);
+
+    // Update screensharing status.
+    isSharing = false;
 };
 
 /**
@@ -245,6 +324,9 @@ changeAnswerButtonState = function (state, target) {
     var kandyButton = (typeof target !== 'undefined')?jQuery(target):jQuery('.kandyButton');
     switch (state) {
         case 'READY_FOR_CALLING':
+            if (jQuery('#labelConnecting').length > 0) {
+                jQuery('#labelConnecting').text('');
+            }
             $audioRingIn[0].pause();
             $audioRingOut[0].pause();
             kandyButton.find('.kandyVideoButtonSomeonesCalling').hide();
@@ -254,6 +336,9 @@ changeAnswerButtonState = function (state, target) {
             break;
 
         case 'BEING_CALLED':
+            if (jQuery('#labelConnecting').length > 0) {
+                jQuery('#labelConnecting').text('');
+            }
             kandyButton.find('.kandyVideoButtonSomeonesCalling').show();
             kandyButton.find('.kandyVideoButtonCallOut').hide();
             kandyButton.find('.kandyVideoButtonCalling').hide();
@@ -261,6 +346,9 @@ changeAnswerButtonState = function (state, target) {
             break;
 
         case 'CALLING':
+            if (jQuery('#labelConnecting').length > 0) {
+                jQuery('#labelConnecting').text('');
+            }
             kandyButton.find('.kandyVideoButtonSomeonesCalling').hide();
             kandyButton.find('.kandyVideoButtonCallOut').hide();
             kandyButton.find('.kandyVideoButtonCalling').show();
@@ -279,6 +367,9 @@ changeAnswerButtonState = function (state, target) {
             break;
 
         case 'ON_CALL':
+            if (jQuery('#labelConnecting').length > 0) {
+                jQuery('#labelConnecting').text('');
+            }
             kandyButton.find('.kandyVideoButtonSomeonesCalling').hide();
             kandyButton.find('.kandyVideoButtonCallOut').hide();
             kandyButton.find('.kandyVideoButtonCalling').hide();
@@ -296,6 +387,7 @@ changeAnswerButtonState = function (state, target) {
 kandy_answer_video_call = function (target) {
     var kandyButtonId = jQuery(target).data('container');
     var currentCallId = jQuery("div#" + kandyButtonId).attr("data-call-id");
+    callId = currentCallId;
 
     activeContainerId = kandyButtonId;
     kandy.call.answerCall(currentCallId, true);
@@ -314,6 +406,7 @@ kandy_reject_video_call = function (target) {
 
     var kandyButtonId = jQuery(target).data('container');
     var currentCallId = jQuery("div#" + kandyButtonId).attr("data-call-id");
+    callId = currentCallId;
     kandy.call.rejectCall(currentCallId);
 
     target = jQuery(target).closest('.kandyButton');
@@ -348,6 +441,27 @@ kandy_make_pstn_call = function (target) {
  */
 kandy_make_video_call = function (target) {
 
+    if (callId) {
+        // Tell Kandy to end the call.
+        kandy.call.endCall(callId);
+        callId = null;
+    } else {
+        var kandyButtonId = jQuery(target).data('container');
+        activeContainerId = kandyButtonId;
+        var userName = jQuery('#'+kandyButtonId+ ' .kandyVideoButtonCallOut #'+kandyButtonId+'-callOutUserId').val();
+
+        kandy.call.makeCall(userName, true);
+        changeAnswerButtonState("CALLING", '#'+kandyButtonId);
+    }
+};
+
+/**
+ * Event when click call button for anonymous user.
+ *
+ * @param target
+ */
+kandy_make_video_call_sso = function (target) {
+    jQuery('#labelConnecting').text('Connecting...');
     var kandyButtonId = jQuery(target).data('container');
     activeContainerId = kandyButtonId;
     var userName = jQuery('#'+kandyButtonId+ ' .kandyVideoButtonCallOut #'+kandyButtonId+'-callOutUserId').val();
@@ -390,6 +504,34 @@ kandy_makeVoiceCall = function (target) {
 };
 
 /**
+ * Event when click call button SSO
+ */
+kandy_makeVoiceCallSSO = function (target) {
+    jQuery('#labelConnecting').text('Connecting...');
+    // Make a video call to support
+    var kandyButtonId = jQuery(target).data('container');
+    activeContainerId = kandyButtonId;
+    var userName = jQuery('#'+kandyButtonId+ ' .kandyVideoButtonCallOut #'+kandyButtonId+'-callOutUserId').val();
+
+    kandy.call.makeCall(userName, true);
+    changeAnswerButtonState("CALLING",'#'+kandyButtonId);
+};
+
+/**
+ * Result success when login SSO
+ */
+onLoginSuccess = function () {
+    console.log('login SSO is successful....');
+    jQuery('#callBtn').removeAttr('disabled');
+};
+
+/**
+ * Result error when login SSO
+ */
+onLoginFailure = function () {
+    console.log('Error! Login SSO ....');
+};
+/**
  * Event when click end call button.
  */
 kandy_end_call = function (target) {
@@ -397,6 +539,9 @@ kandy_end_call = function (target) {
 
     var currentCallId = jQuery("div#" + kandyButtonId).attr("data-call-id");
     kandy.call.endCall(currentCallId);
+    if (callId) {
+        callId = null;
+    }
     activeContainerId = kandyButtonId;
     if (typeof end_call_callback == 'function') {
         end_call_callback('READY_FOR_CALLING');
@@ -410,7 +555,7 @@ kandy_end_call = function (target) {
 kandy_hold_call = function (target) {
     var kandyButtonId = jQuery(target).data('container');
     var currentCallId = jQuery("#" + kandyButtonId).attr("data-call-id");
-
+    callId = currentCallId;
     kandy.call.holdCall(currentCallId);
 
     activeContainerId = kandyButtonId;
@@ -427,7 +572,7 @@ kandy_hold_call = function (target) {
 kandy_resume_call = function (target) {
     var kandyButtonId = jQuery(target).data('container');
     var currentCallId = jQuery("#" + kandyButtonId).attr("data-call-id");
-
+    callId = currentCallId;
     kandy.call.unHoldCall(currentCallId);
 
     activeContainerId = kandyButtonId;
@@ -767,6 +912,12 @@ var getLiContent = function (user, real_id) {
                             <form class="send-message" data-real-id="'+ uid + '" data-user="' + user + '">\
                         <div class="input-message">\
                             <input class="imMessageToSend chat-input" type="text" data-user="' + user + '">\
+                            <div class="send-file">\
+                                <label for="send-file">\
+                                    <span class="icon-file"></span>\
+                                </label>\
+                                <input id="send-file" type="file" />\
+                            </div>\
                         </div>\
                         <div class="button-send">\
                             <input class="btnSendMessage chat-input" type="submit" value="Send" data-user="' + user + '" >\
@@ -897,7 +1048,7 @@ var kandy_onMessage = function(msg) {
     if(msg){
         msg = getDisplayNameForChatContent(msg);
     }
-    if(msg.messageType == 'chat' && msg.contentType === 'text' && msg.message.mimeType == 'text/plain'){
+    if(msg.messageType == 'chat'){
         // Get user info
         var username = msg.sender.full_user_id;
         if(typeof msg.sender.user_email != "undefined" ){
@@ -915,11 +1066,24 @@ var kandy_onMessage = function(msg) {
         }
         // Process message
         if ((msg.hasOwnProperty('message'))) {
-            var msg = msg.message.text;
+            var message = msg.message.text;
             var newMessage = '<div class="their-message">\
-                            <b><span class="imUsername">' + displayName + ':</span></b>\
-                            <span class="imMessage">' + msg + '</span>\
-                        </div>';
+                            <b><span class="imUsername">' + displayName + ': </span></b>';
+
+            if (msg.contentType === 'text' && msg.message.mimeType == 'text/plain') {
+                newMessage += '<span class="imMessage">' + message + '</span>';
+            } else {
+                var fileUrl = kandy.messaging.buildFileUrl(msg.message.content_uuid);
+                var html = '';
+                if (msg.contentType == 'image') {
+                    html = '<img src="' + fileUrl + '">';
+                }
+                html += '<a class="icon-download" href="' + fileUrl + '" target="_blank">' + msg.message.content_name + '</a>';
+                newMessage += '<span class="imMessage">' + html + '</span>';
+            }
+
+            newMessage += '</div>';
+
             var messageDiv = jQuery('.kandyChat .kandyMessages[data-user="' + username + '"]');
             messageDiv.append(newMessage);
             messageDiv.scrollTop(messageDiv[0].scrollHeight);
@@ -928,6 +1092,52 @@ var kandy_onMessage = function(msg) {
 
 };
 
+// Gather the user input then send the image.
+send_file = function () {
+    // Gather user input.
+    var recipient = jQuery(".contacts a.selected").data('content');
+    var file = jQuery("#send-file")[0].files[0];
+
+    if (file.type.indexOf('image') >=0) {
+        kandy.messaging.sendImWithImage(recipient, file, onFileSendSuccess, onFileSendFailure);
+    } else if (file.type.indexOf('audio') >=0) {
+        kandy.messaging.sendImWithAudio(recipient, file, onFileSendSuccess, onFileSendFailure);
+    } else if (file.type.indexOf('video') >=0) {
+        kandy.messaging.sendImWithVideo(recipient, file, onFileSendSuccess, onFileSendFailure);
+    } else if (file.type.indexOf('vcard') >=0) {
+        kandy.messaging.sendImWithContact(recipient, file, onFileSendSuccess, onFileSendFailure);
+    } else {
+        kandy.messaging.sendImWithFile(recipient, file, onFileSendSuccess, onFileSendFailure);
+    }
+};
+
+// What to do on a file send success.
+function onFileSendSuccess(message) {
+    console.log(message.message.content_name + " sent successfully.");
+    var displayName = jQuery('.kandyChat .kandy_current_username').val();
+    var dataHolder = jQuery('.cd-tabs-content > li.selected').data('content');
+    var newMessage = '<div class="my-message">\
+                    <b><span class="imUsername">' + displayName + ': </span></b>';
+
+
+    var fileUrl = kandy.messaging.buildFileUrl(message.message.content_uuid);
+    var html = '';
+    if (message.contentType == 'image') {
+        html = '<img src="' + fileUrl + '">';
+    }
+    html += '<a class="icon-download" href="' + fileUrl + '" target="_blank">' + message.message.content_name + '</a>';
+    newMessage += '<span class="imMessage">' + html + '</span>';
+    newMessage += '</div>';
+
+    var messageDiv = jQuery('.kandyChat .kandyMessages[data-user="' + dataHolder + '"]');
+    messageDiv.append(newMessage);
+    messageDiv.scrollTop(messageDiv[0].scrollHeight);
+}
+
+// What to do on a file send failure.
+function onFileSendFailure() {
+    console.log("File send failure.");
+}
 
 /**
  * Empty all contacts.
@@ -1568,6 +1778,16 @@ var heartBeat = function(interval){
  * Ready================================================================================================================
  */
 jQuery(document).ready(function (jQuery) {
+
+    if (jQuery(".kandyChat").length) {
+        jQuery(document).on('change', "input[type=file]", function (e){
+            var fileName = jQuery(this).val();
+            if (fileName != '') {
+                send_file();
+            }
+        });
+    }
+
   jQuery('body').on('presenceChanged', function(){
     for(var userId in kandyPresence){
       kandyPresenceNotificationCallback(userId,kandyPresence[userId].toLowerCase(),kandyPresence[userId]);
@@ -1584,6 +1804,9 @@ jQuery(document).ready(function (jQuery) {
         setup();
         login();
         console.log('login....');
+    } else if (typeof loginSSO == 'function') {
+        setup();
+        loginSSO();
     }
 
     // Active Select2.
@@ -1746,6 +1969,9 @@ jQuery(document).ready(function (jQuery) {
 
                 // Set focus.
                 selectedContent.find(".imMessageToSend").focus();
+
+                var sendFile = jQuery(liContentWrapSelector + ' li[data-content="'+selectedTab+'"] form .icon-file');
+                sendFile.css('display', 'block');
 
                 // Set chat heading.
                 jQuery(".chat-with-message").show();
