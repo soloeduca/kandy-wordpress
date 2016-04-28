@@ -59,14 +59,6 @@ class KandyAdmin {
             "kandy-help",
             array($this, "kandy_admin_pages")
         );
-        add_submenu_page(
-            "kandy",
-            "Kandy Live Chat Agents",
-            "Live Chat Agent",
-            "administrator",
-            "kandy-chat-agent",
-            array($this, "kandy_admin_pages")
-        );
     }
 
     /**
