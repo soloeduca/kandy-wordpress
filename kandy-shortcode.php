@@ -1385,7 +1385,7 @@ class KandyShortcode
     {
         $result = (new KandyApi())->getAnonymousUser();
 
-        if (!empty($result['success']) && $result['success'] == true) {
+        if ($result['success'] == true) {
             $user = $result['user'];
             $userAccessToken = $user->user_access_token;
             $password = $user->password;
@@ -1573,9 +1573,6 @@ class KandyShortcode
         $fakeEndTime = PHP_INT_MAX;
         //get all unassigned users
         $kandyUserTable = $wpdb->prefix . 'kandy_users';
-        $kandyLiveChatUser = get_option('kandy_live_chat_users', '[]');
-        $kandyLiveChatUser = json_decode($kandyLiveChatUser);
-        $kandyLiveChatUser = implode('","', $kandyLiveChatUser);
         $userLoginTable = $wpdb->prefix . 'kandy_user_login';
         $kandyLiveChatTable = $wpdb->prefix . 'kandy_live_chat';
         $userTable = $wpdb->prefix . 'users';
@@ -1644,7 +1641,6 @@ class KandyShortcode
             );
             //save last insert id for user later
             $liveChatSessionInfo['sessionId'] = $wpdb->insert_id;
-            $_SESSION['kandyLiveChatUserInfo'] = $liveChatSessionInfo;
             $agentUser = new stdClass();
             $agentUser->full_user_id = $agent->full_user_id;
             $agentUser->username = $agent->username;
@@ -1679,6 +1675,8 @@ class KandyShortcode
                 'status' => 'fail'
             );
         }
+
+        $_SESSION['kandyLiveChatUserInfo'] = $liveChatSessionInfo;
 
         echo json_encode($result);
         exit;
